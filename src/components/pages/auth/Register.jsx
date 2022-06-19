@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { register } from '../functions/auth'
+import { register } from '../../functions/auth'
 
 const Register = () => {
 
@@ -37,6 +37,7 @@ const Register = () => {
 
   return (
     <div>
+      <h1>Register Page</h1>
       <form onSubmit={handleSubmit}>
 
         <label htmlFor="">username</label>
