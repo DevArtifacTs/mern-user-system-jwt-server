@@ -5,8 +5,10 @@ import axios from 'axios';
 //Todo 2. define initial state of the slice
 const initialState = {
     username : null,
+    token : null,
+    role : null,
     loading : false,
-    error : '',
+    error : null,
 }
 
 //Todo 2.1. define middleware for async operations
@@ -16,11 +18,13 @@ export const signInAsync = createAsyncThunk('auth/signIn', async userObject => {
         //post user object to server and receive response
         const response = await axios.post('http://localhost:4001/api/login', userObject)
         const {token} = response.data
-        const {user} = response.data.payload;
+        const {username} = response.data.payload.user;
+        const {role} = response.data.payload.user;
         console.log('response: ', response);
-        console.log('TOKEN: ', token, 'USER: ', user);
+        console.log('TOKEN: ', token, 'USER: ', username);
         //create a object payload with token and user
-        const userData = { token : token, user : user }; 
+        const userData = { token : token, username : username, role : role }; 
+
         return userData ; // return action object to the extraReducer and this value will be appear in extraReducer
     } catch(err) {
         throw err ;
@@ -53,7 +57,9 @@ export const authSlice = createSlice({
         },
         [signInAsync.fulfilled] : (state, action) => {
             state.loading = false;
-            state.username = action.payload;  // anything that return from async thunk it will be a payload
+            state.username = action.payload.username;  // anything that return from reducer function it will be mapped as a action.payload
+            state.token = action.payload.token;  // anything that return from reducer function it will be mapped as a action.payload
+            state.role = action.payload.role;  // anything that return from reducer function it will be mapped as a action.payload
             state.error = '';
         },
         [signInAsync.rejected] : (state, action) => {
