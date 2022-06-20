@@ -1,5 +1,5 @@
 import './App.css';
-
+import React, {useState, useEffect} from 'react';
 //Pages
 import Register from './components/pages/auth/Register';
 import Login from './components/pages/auth/Login';
@@ -10,12 +10,43 @@ import Navbar from './components/layouts/Navbar';
 
 import { Routes , Route } from 'react-router-dom';
 
-
 //pages
 import AdminHome from './components/pages/admin/Home';
 import UserHome from './components/pages/user/Home';
 
+//tokenChecker function
+import {currentUser } from './components/functions/auth';
+
+//redux
+import {useDispatch } from 'react-redux'
+import { currentUserCheck } from './store/slices/authSlice';
+
 function App() {
+
+  const dispatch = useDispatch();
+
+  const idToken = localStorage.token
+  if (idToken) {
+    console.log('token is exist', idToken)
+    currentUser(idToken)
+      .then((res)=> {
+        console.log('current user')
+        console.log('current user', res)
+        console.log('current user', res.username)
+        console.log('current user', res.role)
+        dispatch(currentUserCheck(
+          {
+            username : res.username, 
+            token : idToken,
+            role : res.role
+          }))
+          
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+  }
+
   return (
     <div className="App">
       <h1>Hello react</h1>
