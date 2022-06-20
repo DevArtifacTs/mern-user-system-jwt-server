@@ -12,4 +12,18 @@ export const login = async (user) => {
     const response = await axios.post(`${MAIN_URL}/login`, user);
     return response.data;
     }
+
+
+//send token to server and receive response to check if token is valid
+export const currentUser = async (authToken) => {
+    // console.log('authToken', authToken);
+    const response = await axios.post(`${MAIN_URL}/current-user`, {},
+    {
+        headers : {
+            authToken,
+        }
+    });
+    console.log('response.data', response.data);
+    return response.data;
+    }
  
