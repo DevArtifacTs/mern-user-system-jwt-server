@@ -12,7 +12,7 @@ const initialState = {
 }
 
 //Todo 2.1. define middleware for async operations
-export const signInAsync = createAsyncThunk('auth/signIn', async userObject => {
+export const signInAsync = createAsyncThunk('auth/signIn', async (userObject) => {
     //user ; { username : '', password : '' }
     try{
         //post user object to server and receive response
@@ -41,11 +41,16 @@ export const authSlice = createSlice({
     initialState,
     
     //Todo 3.3. define action creators and sync reducers
-    reducer : {
+    reducers : {
         signOut : (state, action) => {
             state.username = null;
             state.loading = false;
             state.error = null;
+        },
+        currentUserCheck : (state, action) => {
+            state.username = action.payload.username;
+            state.token = action.payload.token;
+            state.role = action.payload.role;
         }
     },
     
@@ -57,7 +62,7 @@ export const authSlice = createSlice({
         },
         [signInAsync.fulfilled] : (state, action) => {
             state.loading = false;
-            state.username = action.payload.username;  // anything that return from reducer function it will be mapped as a action.payload
+            state.username = action.payload;  // anything that return from reducer function it will be mapped as a action.payload
             state.token = action.payload.token;  // anything that return from reducer function it will be mapped as a action.payload
             state.role = action.payload.role;  // anything that return from reducer function it will be mapped as a action.payload
             state.error = '';
@@ -71,5 +76,5 @@ export const authSlice = createSlice({
 })
 
 //Todo 4. export action creators and reducer
-export const { signOut } = authSlice.actions;
+export const { signOut, currentUserCheck } = authSlice.actions;
 export default authSlice.reducer;
