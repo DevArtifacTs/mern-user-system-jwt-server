@@ -44,8 +44,11 @@ export const authSlice = createSlice({
     reducers : {
         signOut : (state, action) => {
             state.username = null;
+            state.token = null;
+            state.role = null;
             state.loading = false;
             state.error = null;
+            localStorage.clear();
         },
         currentUserCheck : (state, action) => {
             state.username = action.payload.username;
@@ -62,7 +65,7 @@ export const authSlice = createSlice({
         },
         [signInAsync.fulfilled] : (state, action) => {
             state.loading = false;
-            state.username = action.payload;  // anything that return from reducer function it will be mapped as a action.payload
+            state.username = action.payload.username;  // anything that return from reducer function it will be mapped as a action.payload
             state.token = action.payload.token;  // anything that return from reducer function it will be mapped as a action.payload
             state.role = action.payload.role;  // anything that return from reducer function it will be mapped as a action.payload
             state.error = '';
