@@ -21,6 +21,8 @@ const Register = () => {
       return;
     } else {
       alert('Success');
+      
+      //send request to server
       register(values)
         .then(res=> {
           console.log(res);
