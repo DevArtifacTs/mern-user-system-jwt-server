@@ -21,6 +21,11 @@ import {currentUser } from './components/functions/auth';
 import {useDispatch } from 'react-redux'
 import { currentUserCheck } from './store/slices/authSlice';
 
+//routes
+import UserRoutes from './components/routes/UserRoute.jsx';
+import AdminRoute from './components/routes/AdminRoute.jsx';
+
+
 function App() {
 
   const dispatch = useDispatch();
@@ -28,12 +33,13 @@ function App() {
   const idToken = localStorage.token
   if (idToken) {
     console.log('token is exist', idToken)
+    //send token in a local storage to server and receive response to check if token is valid
     currentUser(idToken)
       .then((res)=> {
-        console.log('current user')
         console.log('current user', res)
-        console.log('current user', res.username)
-        console.log('current user', res.role)
+        console.log('current user name:', res.username)
+        console.log('current user role:', res.role)
+        //
         dispatch(currentUserCheck(
           {
             username : res.username, 
@@ -56,8 +62,20 @@ function App() {
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
         
-        <Route path='/admin/home' element={<AdminHome/>} />
-        <Route path='/user/home' element={<UserHome/>} />
+        <Route path='/admin/home' 
+          element={
+          <AdminRoute>
+            <AdminHome/>
+          </AdminRoute>
+          } />
+
+        {/* we want user role can access only UserHome component */}
+        <Route path='/user/home' 
+          element={
+              <UserRoutes>
+                <UserHome/>
+              </UserRoutes>
+              } />
       
       
       </Routes>
