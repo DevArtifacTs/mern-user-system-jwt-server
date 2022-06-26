@@ -4,14 +4,19 @@ import MenubarAdmin from '../../layouts/MenubarAdmin';
 //redux
 import { useSelector } from 'react-redux';
 
+//Antd
+import { Switch } from 'antd';
+
 //functions
-import {userList } from '../../functions/users'
+import {userList, changeStatus } from '../../functions/users'
 
 function ManageAdmin(props) {
 
     const currentUser = useSelector(state => state.auth)
     
     const [data, setData] = useState([]);
+
+    console.log('currentUser.token: ', currentUser.token)
     
     console.log('data :', data);
     useEffect(()=>{
@@ -27,6 +32,26 @@ function ManageAdmin(props) {
                 //code
                 console.log('err in user manage: ',err.response.data)
             })
+    }
+
+    const handleChange = (e, id) => {
+        console.log('checked = ', e);
+        console.log('_id = ', id);
+        const selectedUser = {
+            id : id,
+            enabled : e
+        }
+
+        changeStatus(currentUser.token, selectedUser)
+            .then(res=> {
+                console.log(res);
+
+                //fetch data when request is success to make this page re-render again
+                loadData(currentUser.token);
+
+            }).catch(err=> {
+                console.log(err.response)
+            });
     }
 
     return (
@@ -55,7 +80,7 @@ function ManageAdmin(props) {
                                         <tr>
                                             <th scope="row">{index + 1}</th>
                                             <td>{user.username}</td>
-                                            <td>{user.enabled}</td>
+                                            <td><Switch checked={user.enabled} onChange={(e)=> handleChange(e, user._id)} /> </td>
                                             <td>{user.role}</td>
                                             <td>{user.createdAt}</td>
                                             <td>{user.updatedAt}</td>

@@ -17,4 +17,15 @@ export const userList = async (authToken) => {
     }
 
 
+
+//change role
+export const changeStatus = async (authToken, selectedUser) => {
+    return await axios.post(`${MAIN_URL}/change-status`, selectedUser, {
+        headers: {
+            authToken,
+        }
+    })
+}
+
+
    
