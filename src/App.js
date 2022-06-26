@@ -13,6 +13,7 @@ import { Routes , Route } from 'react-router-dom';
 //pages
 import AdminHome from './components/pages/admin/Home';
 import UserHome from './components/pages/user/Home';
+import ManageAdmin from './components/pages/admin/ManageAdmin';
 
 //tokenChecker function
 import {currentUser } from './components/functions/auth';
@@ -61,7 +62,7 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
-        
+{/* ------------------------------------------Admin Only----------------------------------------------------------- */}
         <Route path='/admin/home' 
           element={
           <AdminRoute>
@@ -69,6 +70,13 @@ function App() {
           </AdminRoute>
           } />
 
+        <Route path='/admin/manage-admin' 
+          element={
+          <AdminRoute>
+            <ManageAdmin/>
+          </AdminRoute>
+          } />
+{/* ------------------------------------------User----------------------------------------------------------- */}
         {/* we want user role can access only UserHome component */}
         <Route path='/user/home' 
           element={
