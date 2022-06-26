@@ -14,7 +14,8 @@ export const login = async (user) => {
     }
 
 
-//send token to server and receive response to check if token is valid
+//send token in a local storage (must login first then this function can be run in App.js) 
+//to server and receive response to check if token is valid
 export const currentUser = async (authToken) => {
     // console.log('authToken', authToken);
     const response = await axios.post(`${MAIN_URL}/current-user`, {},
@@ -26,4 +27,17 @@ export const currentUser = async (authToken) => {
     console.log('response.data', response.data);
     return response.data;
     }
- 
+
+export const currentAdmin = async (authToken) => {
+    // console.log('authToken', authToken);
+    const response = await axios.post(`${MAIN_URL}/current-admin`, {},
+    {
+        headers : {
+            authToken,
+        }
+    });
+    console.log('response.data', response.data);
+    return response.data;
+    }
+
+   
