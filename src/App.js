@@ -56,7 +56,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello react</h1>
+      <h1>MERN User System</h1>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home/>} />
