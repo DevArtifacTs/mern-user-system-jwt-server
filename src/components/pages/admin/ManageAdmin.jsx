@@ -13,6 +13,9 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 //functions
 import {userList, changeStatus, changeUserRole, deleteUser } from '../../functions/users'
 
+//moment.js
+import moment from 'moment/min/moment-with-locales';
+
 function ManageAdmin(props) {
 
     const currentUser = useSelector(state => state.auth)
@@ -143,8 +146,8 @@ function ManageAdmin(props) {
                                                     }
                                                 </Select>
                                             </td>
-                                            <td>{user.createdAt}</td>
-                                            <td>{user.updatedAt}</td>
+                                            <td>{moment(user.createdAt).locale('th').format('LL')}</td>
+                                            <td>{moment(user.updatedAt).locale('th').startOf('minute').fromNow()}</td>
                                             <td> <button onClick={()=> handleRemove(user._id)} style={{border:'0', background:'none'}} ><DeleteOutlined /></button> </td>
                                             <td> <button onClick={()=> handleRemove(user._id)} style={{border:'0', background:'none'}} ><EditOutlined /></button> </td>
                                         </tr>
