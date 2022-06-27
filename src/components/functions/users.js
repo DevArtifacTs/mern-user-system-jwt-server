@@ -28,4 +28,22 @@ export const changeStatus = async (authToken, selectedUser) => {
 }
 
 
+//changeUserRole
+export const changeUserRole = async (authToken, selectedUser) => {
+    return await axios.put(`${MAIN_URL}/change-role`, selectedUser, {
+        headers: {
+            authToken,
+        }
+    })
+}
+
+//delete user by _id
+export const deleteUser = async (authToken, id) => {
+    return await axios.delete(`${MAIN_URL}/users/${id}`, {
+        headers: {
+            authToken,
+        }
+    })
+}
+
    
