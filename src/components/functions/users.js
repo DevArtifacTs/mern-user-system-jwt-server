@@ -46,4 +46,28 @@ export const deleteUser = async (authToken, id) => {
     })
 }
 
-   
+//reset password by _id
+export const resetPassword = async (authToken, id, newPassword) => {
+    return await axios.put(`${MAIN_URL}/users/${id}`, 
+    {password : newPassword},
+    {
+        headers : {
+            authToken,
+        }
+    })
+}
+
+//! Note : axios request with header and params body syntax 
+/**
+ * axios.post(
+'https://example.com/postSomething', 
+{ // this is the body
+ email: varEmail, 
+ password: varPassword
+},
+{
+  headers: {
+    Authorization: 'Bearer ' + varToken
+  }
+})
+ */
