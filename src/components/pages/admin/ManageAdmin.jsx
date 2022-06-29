@@ -116,22 +116,22 @@ function ManageAdmin(props) {
     const handleOk = () => {
         setModalText('please wait...');
         setConfirmLoading(true);
+
         
         resetPassword(currentUser.token, values._id, values.password)
-            .then(res => {
+            .then(async res => {
                 console.log(res)
-
                 //fetch data when request is success to make this page re-render again
-                // loadData(currentUser.token);
+                await loadData(currentUser.token);
+
+                setVisible(false);
+                setConfirmLoading(false);
 
             }).catch(err => {
                 console.log(err)
             })
 
-        setTimeout(() => {
-            setVisible(false);
-            setConfirmLoading(false);
-        }, 2000);
+        
     };
 
     const handleCancel = () => {
