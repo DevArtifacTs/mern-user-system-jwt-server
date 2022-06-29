@@ -26,6 +26,9 @@ import { currentUserCheck } from './store/slices/authSlice';
 import UserRoutes from './components/routes/UserRoute.jsx';
 import AdminRoute from './components/routes/AdminRoute.jsx';
 
+//React Toastify
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -56,7 +59,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>MERN User System</h1>
+      {/* <h1>MERN User System</h1> */}
+      <ToastContainer />
       <Navbar />
       <Routes>
         <Route path='/' element={<Home/>} />
